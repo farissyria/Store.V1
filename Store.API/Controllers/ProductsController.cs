@@ -58,6 +58,7 @@ namespace Store.Api.Controllers
             return Ok(product);
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] UpdateProductDto updateProductDto)
         {
             if (!ModelState.IsValid)
@@ -68,6 +69,7 @@ namespace Store.Api.Controllers
                return NoContent();
         }
         [HttpDelete("Deactive Product/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult>DeleteProduct(int id)
         {
            var product= await _productService.DeleteProductAsync(id);
@@ -81,6 +83,7 @@ namespace Store.Api.Controllers
             return NoContent();
         }
         [HttpGet("Search Product/{term}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductDto>>>SearchProducts(string term)
         {
             var product=await _productService.SearchProductAsync(term);
